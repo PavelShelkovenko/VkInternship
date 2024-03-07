@@ -1,6 +1,8 @@
 plugins {
-    alias(libs.plugins.androidApplication)
-    alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.kotlin)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.dagger.hilt)
 }
 
 android {
@@ -51,19 +53,29 @@ android {
 
 dependencies {
 
+
+    // Core
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
+
+    // Compose
+    implementation(platform(libs.compose.bom))
+    implementation(libs.bundles.compose)
+
+    // Coil
+    implementation(libs.bundles.coil)
+
+    // Retrofit
+    implementation(libs.bundles.retrofit)
+
+    // Dagger
+    implementation(libs.bundles.dagger)
+    kapt(libs.dagger.compiler)
+    kapt(libs.hilt.compiler)
+
+    // Test
+    androidTestImplementation(platform(libs.compose.bom))
+    androidTestImplementation(libs.bundles.testing.ui)
+    testImplementation(libs.bundles.testing)
+    debugImplementation(libs.bundles.debug)
 }
