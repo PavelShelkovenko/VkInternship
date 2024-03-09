@@ -7,8 +7,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.shelkovenko.vkinternship.ui.theme.VkInternshipTheme
+import com.shelkovenko.vkinternship.presentation.main_screen.products_list.ProductsListScreen
+import com.shelkovenko.vkinternship.presentation.theme.VkInternshipTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,7 +22,10 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-
+                    ProductsListScreen(
+                        onNavigateToSearchProducts = {},
+                        onNavigateToProductDetails = {}
+                    )
                 }
             }
         }
