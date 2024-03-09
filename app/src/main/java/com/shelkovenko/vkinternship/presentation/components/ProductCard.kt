@@ -76,7 +76,7 @@ fun ProductCard(
                     .padding(start = 16.dp)
             ) {
                 Text(
-                    text = "${product.id}",
+                    text = product.title,
                     color = MaterialTheme.colorScheme.onBackground,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Medium,
@@ -85,12 +85,13 @@ fun ProductCard(
                     modifier = Modifier.widthIn(max = 240.dp)
                 )
                 Text(
-                    text = "${product.description.replaceFirstChar(Char::titlecase)} (${product.rating})",
+                    text = product.description.replaceFirstChar(Char::titlecase),
                     color = MaterialTheme.colorScheme.tertiary,
-                    fontSize = 14.sp,
+                    fontSize = 12.sp,
                     fontWeight = FontWeight.Medium,
                     overflow = TextOverflow.Ellipsis,
-                    maxLines = 1,
+                    lineHeight = 14.sp,
+                    maxLines = 2,
                     modifier = Modifier.widthIn(max = 240.dp)
                 )
             }

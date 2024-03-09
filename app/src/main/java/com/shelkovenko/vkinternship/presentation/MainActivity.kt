@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.shelkovenko.vkinternship.presentation.main_screen.products_list.ProductsListScreen
+import com.shelkovenko.vkinternship.presentation.screens.products_list.ProductsListScreen
 import com.shelkovenko.vkinternship.presentation.theme.VkInternshipTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,10 +22,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    ProductsListScreen(
-                        onNavigateToSearchProducts = {},
-                        onNavigateToProductDetails = {}
-                    )
+                    RootScreen()
                 }
             }
         }

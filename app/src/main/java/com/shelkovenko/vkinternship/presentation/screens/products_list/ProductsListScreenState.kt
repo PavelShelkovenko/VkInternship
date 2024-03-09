@@ -1,4 +1,4 @@
-package com.shelkovenko.vkinternship.presentation.main_screen.products_list
+package com.shelkovenko.vkinternship.presentation.screens.products_list
 
 import com.shelkovenko.vkinternship.domain.models.Product
 

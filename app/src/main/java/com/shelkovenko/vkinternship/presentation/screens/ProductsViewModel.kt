@@ -1,10 +1,10 @@
-package com.shelkovenko.vkinternship.presentation.main_screen
+package com.shelkovenko.vkinternship.presentation.screens
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shelkovenko.vkinternship.domain.ProductsRepository
-import com.shelkovenko.vkinternship.presentation.main_screen.products_list.ProductsListScreenState
+import com.shelkovenko.vkinternship.domain.models.Product
+import com.shelkovenko.vkinternship.presentation.screens.products_list.ProductsListScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -23,6 +23,10 @@ class ProductsViewModel @Inject constructor(
 
     init {
         downloadProducts()
+    }
+
+    fun getProductDetails(productId: Int): Product? {
+        return _state.value.productsList.find { it.id == productId }
     }
 
     fun loadMore() {
