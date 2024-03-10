@@ -68,6 +68,10 @@ dependencies {
     // Retrofit
     implementation(libs.bundles.retrofit)
 
+    // Room
+    implementation(libs.bundles.room)
+    kapt(libs.room.compiler)
+
     // Dagger
     implementation(libs.bundles.dagger)
     kapt(libs.dagger.compiler)

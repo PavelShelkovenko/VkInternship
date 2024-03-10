@@ -1,6 +1,5 @@
 package com.shelkovenko.vkinternship.presentation.screens.products_list
 
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -9,12 +8,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.shelkovenko.vkinternship.presentation.components.ErrorScreen
-import com.shelkovenko.vkinternship.presentation.screens.ProductsViewModel
 import com.shelkovenko.vkinternship.presentation.components.ProductsList
 import com.shelkovenko.vkinternship.presentation.components.ShimmersProductList
 import com.shelkovenko.vkinternship.presentation.components.TopBar
@@ -26,9 +24,7 @@ fun ProductsListScreen(
 ) {
 
     val viewModel = hiltViewModel<ProductsViewModel>()
-    val state = viewModel.state.collectAsState()
-
-    Log.d("TAG", "$viewModel")
+    val state = viewModel.state.collectAsStateWithLifecycle()
 
     ProductsListContent(
         state = state,

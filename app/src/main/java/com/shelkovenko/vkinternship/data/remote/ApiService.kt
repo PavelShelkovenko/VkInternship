@@ -1,7 +1,5 @@
-package com.shelkovenko.vkinternship.data
+package com.shelkovenko.vkinternship.data.remote
 
-import com.shelkovenko.vkinternship.data.models.ProductDto
-import com.shelkovenko.vkinternship.data.models.ProductsResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -15,12 +13,12 @@ interface ApiService {
     ): ProductsResponse
 
     @GET("products/{id}")
-    fun getProductById(
+    suspend fun getProductById(
         @Path("id") id: Int,
     ): ProductDto
 
     @GET("products/search")
-    fun searchProduct(
+    suspend fun searchProduct(
         @Query("q") keyword: String
     ): ProductsResponse
 

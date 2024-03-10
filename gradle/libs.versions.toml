@@ -11,6 +11,7 @@ junit = "4.13.2"
 compose-bom = "2024.02.02"
 coil = "2.4.0"
 retrofit = "2.9.0"
+room = "2.6.1"
 okHttp = "4.11.0"
 okHttp-logging = "4.11.0"
 dagger = "2.49"
@@ -51,6 +52,11 @@ truth-test = { module = "com.google.truth:truth", version.ref = "truth" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 coil-svg = { module = "io.coil-kt:coil-svg", version.ref = "coil" }
 
+# Room
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+
 # Retrofit
 retrofit-core = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-gson-converter = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
@@ -77,4 +83,5 @@ debug = ["compose-ui-tooling", "androidx-compose-ui-test-manifest"]
 coil = ["coil-compose", "coil-svg"]
 retrofit = ["retrofit-core", "retrofit-gson-converter", "okHttp-core", "okHttp-logging-interceptor"]
 dagger = ["dagger-core", "dagger-compose"]
+room = ["room-runtime", "room-ktx"]
 testing = ["mockk-test", "coroutines-testing", "truth-test", "junit-test"]
