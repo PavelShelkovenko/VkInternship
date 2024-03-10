@@ -1,4 +1,4 @@
-package com.shelkovenko.vkinternship.data.models
+package com.shelkovenko.vkinternship.data.remote
 
 import com.google.gson.annotations.SerializedName
 

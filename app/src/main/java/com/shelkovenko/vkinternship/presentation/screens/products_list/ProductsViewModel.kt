@@ -1,10 +1,8 @@
-package com.shelkovenko.vkinternship.presentation.screens
+package com.shelkovenko.vkinternship.presentation.screens.products_list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shelkovenko.vkinternship.domain.ProductsRepository
-import com.shelkovenko.vkinternship.domain.models.Product
-import com.shelkovenko.vkinternship.presentation.screens.products_list.ProductsListScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -25,10 +23,6 @@ class ProductsViewModel @Inject constructor(
         downloadProducts()
     }
 
-    fun getProductDetails(productId: Int): Product? {
-        return _state.value.productsList.find { it.id == productId }
-    }
-
     fun loadMore() {
         val skip = state.value.productsList.size
         if (skip <= 80) {
@@ -44,28 +38,33 @@ class ProductsViewModel @Inject constructor(
             downloadProducts(skip)
         }
     }
+
     fun downloadProducts(skip: Int = 0) {
         viewModelScope.launch {
             if (skip == 0) {
-                _state.update { it.copy(
-                    isLoading = true,
-                    isError = false,
-                    errorMessage = null,
-                    loadMoreError = null
-                ) }
+                _state.update {
+                    it.copy(
+                        isLoading = true,
+                        isError = false,
+                        errorMessage = null,
+                        loadMoreError = null
+                    )
+                }
             }
             productsRepository.getProducts(skip = skip)
                 .onSuccess { products ->
-                    _state.update {
-                        val newProductsList = it.productsList + products
-                        it.copy(
-                            isLoading = false,
-                            isError = false,
-                            errorMessage = null,
-                            loadMoreError = null,
-                            productsList = newProductsList,
-                            isLoadingNextProducts = false
-                        )
+                    if (products != _state.value.productsList) {
+                        val newProductsList = _state.value.productsList + products
+                        _state.update {
+                            it.copy(
+                                isLoading = false,
+                                isError = false,
+                                errorMessage = null,
+                                loadMoreError = null,
+                                productsList = newProductsList,
+                                isLoadingNextProducts = false
+                            )
+                        }
                     }
                 }
                 .onFailure { error ->
