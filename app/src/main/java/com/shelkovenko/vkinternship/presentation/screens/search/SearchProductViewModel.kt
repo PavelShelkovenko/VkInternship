@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SearchProductViewModel @Inject constructor(
     private val productsRepository: ProductsRepository
-): ViewModel() {
+) : ViewModel() {
 
     private val _state: MutableStateFlow<SearchProductsScreenState> =
         MutableStateFlow((SearchProductsScreenState()))
@@ -23,11 +23,12 @@ class SearchProductViewModel @Inject constructor(
 
 
     fun onEvent(event: SearchProductsEvent) {
-        when(event) {
+        when (event) {
             is SearchProductsEvent.ChangeKeyword -> {
-                _state.update {it.copy(keyword = event.newKeyword) }
+                _state.update { it.copy(keyword = event.newKeyword) }
                 searchProducts(event.newKeyword)
             }
+
             is SearchProductsEvent.Repeat -> {
                 searchProducts(_state.value.keyword)
             }
@@ -37,47 +38,56 @@ class SearchProductViewModel @Inject constructor(
     private var searchJob: Job? = null
 
     private fun searchProducts(newKeyword: String) {
-        viewModelScope.launch {
-            searchJob?.cancel()
-            searchJob = viewModelScope.launch {
-                delay(800)
+        searchJob?.cancel()
+        searchJob = viewModelScope.launch {
+            delay(800)
+            if (newKeyword.isEmpty()) {
                 _state.update {
                     it.copy(
-                        isInitial = false,
-                        isLoading = true,
+                        isLoading = false,
+                        isEmptySearch = true,
                         isError = false,
-                        isEmptySearch = false
+                        products = emptyList()
                     )
                 }
-                val result = productsRepository.searchProduct(keyword = newKeyword)
-                result.onSuccess { products ->
-                    if (products.isEmpty()) {
-                        _state.update {
-                            it.copy(
-                                isLoading = false,
-                                isEmptySearch = true,
-                                isError = false,
-                                products = emptyList()
-                            )
-                        }
-                    } else {
-                        _state.update {
-                            it.copy(
-                                products = products,
-                                isLoading = false,
-                                isEmptySearch = false,
-                                isError = false
-                            )
-                        }
-                    }
-                }.onFailure {
+                return@launch
+            }
+            _state.update {
+                it.copy(
+                    isInitial = false,
+                    isLoading = true,
+                    isError = false,
+                    isEmptySearch = false
+                )
+            }
+            val result = productsRepository.searchProduct(keyword = newKeyword)
+            result.onSuccess { products ->
+                if (products.isEmpty()) {
                     _state.update {
                         it.copy(
                             isLoading = false,
-                            isError = true,
-                            isEmptySearch = false
+                            isEmptySearch = true,
+                            isError = false,
+                            products = emptyList()
                         )
                     }
+                } else {
+                    _state.update {
+                        it.copy(
+                            products = products,
+                            isLoading = false,
+                            isEmptySearch = false,
+                            isError = false
+                        )
+                    }
+                }
+            }.onFailure {
+                _state.update {
+                    it.copy(
+                        isLoading = false,
+                        isError = true,
+                        isEmptySearch = false
+                    )
                 }
             }
         }
