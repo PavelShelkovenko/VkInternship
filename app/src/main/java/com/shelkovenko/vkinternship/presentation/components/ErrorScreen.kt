@@ -43,14 +43,14 @@ fun ErrorScreen(
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "Some error occurred, check your internet connection",
+                text = stringResource(R.string.some_error_occurred_check_your_internet_connection),
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.displayMedium,
                 color = MaterialTheme.colorScheme.primary
             )
             Spacer(modifier = Modifier.height(30.dp))
             Button(onClick = { onRepeatClick() }) {
-                Text(text = "Repeat")
+                Text(text = stringResource(id = R.string.repeat))
             }
         }
     }
