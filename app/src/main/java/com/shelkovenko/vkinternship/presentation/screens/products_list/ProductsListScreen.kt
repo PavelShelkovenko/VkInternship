@@ -69,15 +69,14 @@ fun ProductsListContent(
                     ErrorScreen {
                         onRetryDownloadProducts()
                     }
-                }
-                else {
+                } else {
                     ProductsList(
                         productsList = state.value.productsList,
                         loadMoreError = state.value.loadMoreError,
                         contentPadding = PaddingValues(top = 10.dp, bottom = 70.dp),
                         onProductClick = onNavigateToProductDetails,
                         onShouldLoadMore = onShouldLoadMore,
-                        isLoadingNextProducts = state.value.isLoadingNextProducts
+                        isLoadingNextProducts = state.value.isLoadingNextProducts,
                     )
                 }
             }
