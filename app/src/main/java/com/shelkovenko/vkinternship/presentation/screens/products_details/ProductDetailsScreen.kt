@@ -71,7 +71,9 @@ fun ProductDetailsContent(
     ) {
         when (localState) {
             is ProductDetailsScreenState.Content -> {
-                LazyColumn {
+                LazyColumn(
+                    modifier = Modifier
+                ) {
                     item {
                         Box(
                             modifier = Modifier
@@ -95,7 +97,6 @@ fun ProductDetailsContent(
                         )
                     }
                 }
-
             }
 
             ProductDetailsScreenState.Loading -> {

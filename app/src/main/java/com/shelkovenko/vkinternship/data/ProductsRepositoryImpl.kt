@@ -4,7 +4,8 @@ import com.shelkovenko.vkinternship.data.local.ProductDao
 import com.shelkovenko.vkinternship.data.remote.ApiService
 import com.shelkovenko.vkinternship.domain.ProductsRepository
 import com.shelkovenko.vkinternship.domain.models.Product
-import retrofit2.HttpException
+import java.io.IOException
+
 
 class ProductsRepositoryImpl(
     private val apiService: ApiService,
@@ -13,8 +14,12 @@ class ProductsRepositoryImpl(
     override suspend fun getProducts(skip: Int): Result<List<Product>> {
         return try {
             getProductsFromNetwork(skip)
-        } catch (ex: HttpException) {
-            getProductsFromCache()
+        } catch (ex: IOException) {
+            if (skip == 0) {
+                getProductsFromCache()
+            } else {
+                Result.failure(IllegalStateException(ex.message))
+            }
         } catch (ex: Exception) {
             getProductsFromCache()
         }
@@ -35,6 +40,7 @@ class ProductsRepositoryImpl(
         val result = response.toProduct()
         return Result.success(result)
     }
+
     private suspend fun getProductByIdFromCache(id: Int): Result<Product> {
         val cachedProduct = productDao.getProductById(productId = id)
             ?: throw IllegalStateException("Empty cache")
@@ -44,12 +50,13 @@ class ProductsRepositoryImpl(
     override suspend fun searchProduct(keyword: String): Result<List<Product>> {
         return try {
             searchProductsFromNetwork(keyword)
-        } catch (ex: HttpException) {
+        } catch (ex: IOException) {
             searchProductsFromCache(query = keyword)
         } catch (ex: Exception) {
             searchProductsFromCache(query = keyword)
         }
     }
+
     private suspend fun searchProductsFromNetwork(keyword: String): Result<List<Product>> {
         val response = apiService.searchProduct(keyword = keyword)
         val resultList = response.products.map { productDto ->
@@ -68,7 +75,6 @@ class ProductsRepositoryImpl(
         }
         return Result.success(result)
     }
-
 
     private suspend fun getProductsFromNetwork(skip: Int): Result<List<Product>> {
         val response = apiService.getProducts(skip = skip)
