@@ -6,4 +6,7 @@
     <string name="other_images">Other images</string>
     <string name="search_products">Search products</string>
     <string name="not_found">Not found</string>
+    <string name="popular_products">Popular products</string>
+    <string name="repeat">Repeat</string>
+    <string name="some_error_occurred_check_your_internet_connection">Some error occurred, check your internet connection</string>
 </resources>

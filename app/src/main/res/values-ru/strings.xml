@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">VkInternship</string>
+    <string name="category">Категория</string>
+    <string name="price">Цена</string>
+    <string name="rating">Рейтинг</string>
+    <string name="other_images">Другие изображения</string>
+    <string name="search_products">Поиск продуктов</string>
+    <string name="not_found">Не найдено</string>
+    <string name="popular_products">Популярные продукты</string>
+    <string name="repeat">Повторить</string>
+    <string name="some_error_occurred_check_your_internet_connection">Возникла ошибка, проверьте ваше интернет соединение</string>
+</resources>
